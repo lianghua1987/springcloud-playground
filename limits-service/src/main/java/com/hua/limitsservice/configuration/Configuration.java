@@ -11,4 +11,6 @@ public class Configuration {
 
     private int minimum;
     private int maximum;
+    private String home;
+    private String userhome;
 }
