@@ -11,29 +11,44 @@ services:
     depends_on:
       - naming-server
     environment:
-      EUREKA:
-        CLIENT:
-          SERVICEURL:
-            DEFAULTZONE: http://naming-server:8761/eureka
-    currency-conversion:
-      image: lianghua1987/springcloudplayground-currency-exchange-service:1.0-SNAPSHOT
-      mem_limit: 700m
-      ports:
-        - "8100:8100"
-      networks:
-        - currency-network
-      depends_on:
-        - naming-server
-      environment:
-        EUREKA:
-          CLIENT:
-            SERVICEURL:
-              DEFAULTZONE: http://naming-server:8761/eureka
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411
+  currency-conversion:
+    image: lianghua1987/springcloudplayground-currency-exchange-service:1.0-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - "8100:8100"
+    networks:
+      - currency-network
+    depends_on:
+      - naming-server
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411
+  api-gateway:
+    image: lianghua1987/springcloudplayground-currency-exchange-service:1.0-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - "8765:8765"
+    networks:
+      - currency-network
+    depends_on:
+      - naming-server
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411
   naming-server:
-    image: hualiang316/springcloudplayground-naming-server:1.0-SNAPSHOT
+    image: lianghua198/springcloudplayground-naming-server:1.0-SNAPSHOT
     mem_limit: 700m
     ports:
       - "8761:8761"
+    networks:
+      - currency-network
+  zipkin-server:
+    image: openzipkin/zipkin:latest
+    mem_limit: 700m
+    ports:
+      - "9411:9411"
     networks:
       - currency-network
 
