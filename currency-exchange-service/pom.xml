@@ -67,7 +67,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <image>
-                        <name>hualiang316/springcloudplayground-${project.artifactId}:${project.version}</name>
+                        <name>lianghua1987/springcloudplayground-${project.artifactId}:${project.version}</name>
                     </image>
                     <pullPolicy>IF_NOT_PRESENT</pullPolicy>
                 </configuration>
