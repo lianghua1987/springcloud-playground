@@ -14,7 +14,7 @@ services:
       EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
       SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411
   currency-conversion:
-    image: lianghua1987/springcloudplayground-currency-exchange-service:1.0-SNAPSHOT
+    image: lianghua1987/springcloudplayground-currency-conversion-service:1.0-SNAPSHOT
     mem_limit: 700m
     ports:
       - "8100:8100"
@@ -26,7 +26,7 @@ services:
       EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
       SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411
   api-gateway:
-    image: lianghua1987/springcloudplayground-currency-exchange-service:1.0-SNAPSHOT
+    image: lianghua1987/springcloudplayground-api-gateway:1.0-SNAPSHOT
     mem_limit: 700m
     ports:
       - "8765:8765"
@@ -38,7 +38,7 @@ services:
       EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
       SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411
   naming-server:
-    image: lianghua198/springcloudplayground-naming-server:1.0-SNAPSHOT
+    image: lianghua1987/springcloudplayground-naming-server:1.0-SNAPSHOT
     mem_limit: 700m
     ports:
       - "8761:8761"
