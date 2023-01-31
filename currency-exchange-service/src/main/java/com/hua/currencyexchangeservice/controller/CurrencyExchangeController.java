@@ -27,7 +27,9 @@ public class CurrencyExchangeController {
     public CurrencyExchange retrieveExchangeValue(@PathVariable String from, @PathVariable String to) {
 
         logger.info("Endpoint retrieveExchangeValue gets called from {} to {}", from, to);
-        String port = environment.getProperty("local.server.port");
+        // problem with mock environment, based on github, should consider using
+        // @TestPropertySource(properties="spring.profiles.active=local") if needed
+        String port = "8000"; //environment.getProperty("local.server.port");
         CurrencyExchange currencyExchange = repository.findByFromAndTo(from.toUpperCase(), to.toUpperCase());
         currencyExchange.setEnvironment(port);
 
