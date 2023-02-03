@@ -32,11 +32,6 @@ public class CurrencyExchangeController {
         String port = "8000"; //environment.getProperty("local.server.port");
         CurrencyExchange currencyExchange = repository.findByFromAndTo(from.toUpperCase(), to.toUpperCase());
         currencyExchange.setEnvironment(port);
-
-        if(currencyExchange == null){
-            throw new RuntimeException("Invalid");
-        }
-
         return currencyExchange;
     }
 }
