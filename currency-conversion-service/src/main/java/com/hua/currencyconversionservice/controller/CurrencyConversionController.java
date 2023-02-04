@@ -1,8 +1,11 @@
 package com.hua.currencyconversionservice.controller;
 
 import com.hua.currencyconversionservice.bean.CurrencyConversion;
+import com.hua.currencyconversionservice.config.PropertyConfiguration;
 import com.hua.currencyconversionservice.proxy.CurrencyExchangeProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,15 +16,19 @@ import org.springframework.web.client.RestTemplate;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
+@RefreshScope
 public class CurrencyConversionController {
+
     @Autowired
     private Environment environment;
 
     @Autowired
     private CurrencyExchangeProxy proxy;
+
+    @Autowired
+    PropertyConfiguration configuration;
 
     @GetMapping("currency-conversion/from/{from}/to/{to}/quantity/{quantity}")
     public CurrencyConversion calculateCurrencyConversion(@PathVariable String from, @PathVariable String to, @PathVariable BigDecimal quantity) {
@@ -50,6 +57,9 @@ public class CurrencyConversionController {
 
         if (conversion == null) throw new RuntimeException("CurrencyConversion should not be null");
 
-        return new CurrencyConversion(conversion.getId(), from, to, quantity, conversion.getConversionMultiple(), quantity.multiply(conversion.getConversionMultiple()), conversion.getEnvironment());
+        System.out.println(configuration.getLabel());
+
+        return new CurrencyConversion(conversion.getId(), from, to, quantity, conversion.getConversionMultiple(), quantity.multiply(conversion.getConversionMultiple()),
+                configuration.getLabel());
     }
 }
